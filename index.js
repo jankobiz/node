@@ -1,6 +1,6 @@
 var fs = require("fs");
 readFile();
-console.log('\n\nAfter File Read!!!!!!!!!!!!!!!!!\n\n\n\n\n');
+console.log('\n\nAfter File Read!!!!!!!!!!!!!!!!!\n\n\n');
 var points = [40, 100, 11, 5, 25, 10];
 points.forEach(function(item){	
     setTimeout(function(){console.log(item);}, 1000);
@@ -15,11 +15,11 @@ console.log(' ');
 
 function foo() {
     bar(function(returnValue) {
-	for (i = 0; i < 10; i++) {
-	    console.log('Loop number ' + i);
-	}
+		for (i = 0; i < 10; i++) {
+			console.log('Loop number ' + i);
+		}
 //	setTimeout(function(){console.log('Waited 1 sec')}, 1000);
-	console.log('Value ' + returnValue);
+		console.log('Value ' + returnValue);
     });
     console.log('Async Value');
 }
@@ -33,9 +33,9 @@ console.log('Second');
 
 fs.readFile('input.txt', function (err, data) {
     if (err) {
-	return console.error(err);
+		return console.error(err);
     } else {
-	console.log(data.toString());
+	console.log(data.toString() + '\n');
 	console.log("Program Ended 1");
 	check(function (anotherValue) {
 	    console.log(anotherValue);
@@ -48,7 +48,7 @@ check(function (anotherValue) {
 });
 
 function check (callback) {
-    callback ("Another callback test\n");
+    callback ("Another callback test");
 }
 console.log("Program Ended");
 

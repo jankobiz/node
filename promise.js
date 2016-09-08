@@ -1,4 +1,5 @@
 var http = require('http');
+var Promise = require('promise');
 
 syncOutput(function () {		
 	console.log('Lets try this approach!');
