@@ -5,6 +5,7 @@ var anotherValue = 'Another callback';
 var fs = require("fs");
 var promise = require('promise');
 var readFile = promise.denodeify(require('fs').readFile);
+var httpGet = promise.denodeify(require('http').get);
 
 fs.readFile('input.txt', function (err, data) {
     if (err) {
@@ -29,8 +30,32 @@ function retrieveContent (filename) {
 	console.log('Acync thing works');
 }
 
+function getData () {
+	var requestedData;
+	httpGet('http://jsonplaceholder.typicode.com/posts/1').then(function (data) {
+		console.log("Got response: " + data.statusCode);
+//		if(res.statusCode === 200) {
+//			console.log("Got value: " + res.statusMessage);
+//			//console.log("Got value: " + JSON.stringify(res));
+//			res.setEncoding('utf8');		
+//			res.on('end', function () {
+//				console.log('Response ended');
+//				return requestedData;
+//			});
+//			res.on('data', function (chunk) {
+//				console.log(chunk);
+//				requestedData = chunk;
+//				jsonObject = JSON.parse(chunk);
+//				console.log(jsonObject.userId);
+//			});
+//		}
+	});
+	console.log('Acync HTTP');
+}
+
 check(function (anotherValue, value) {
     console.log(anotherValue + value + ' which is async!\n');
 });
 
 retrieveContent('input1.txt');
+getData();

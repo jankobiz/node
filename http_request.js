@@ -67,7 +67,7 @@ function getData (http) {
 		if(res.statusCode === 200) {
 			console.log("Got value: " + res.statusMessage);
 			//console.log("Got value: " + JSON.stringify(res));
-			res.setEncoding('utf8');		
+			res.setEncoding('utf8');
 			res.on('end', function () {
 				console.log('Response ended');
 				return requestedData;
