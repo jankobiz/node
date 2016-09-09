@@ -11,3 +11,11 @@ fs.readFile('input.txt', function (err, data) {
 	});
     }
 });
+
+check(function (anotherValue) {
+    console.log(anotherValue + ' which is async!\n');
+});
+
+function check (callback) {
+    callback ("Another callback test");
+}
