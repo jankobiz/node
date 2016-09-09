@@ -1,21 +1,25 @@
+var val1;
+var val2 = 'Value2 ';
+var anotherValue = 'Another callback';
+
 var fs = require("fs");
+var Promise = require('promise');
 
 fs.readFile('input.txt', function (err, data) {
     if (err) {
 		return console.error(err);
     } else {
 	console.log(data.toString() + '\n');
-	console.log("Program Ended 1");
-	check(function (anotherValue) {
-	    console.log(anotherValue);
+	check(function (val1, val2) {
+	    console.log(val1);
 	});
     }
 });
 
-check(function (anotherValue) {
-    console.log(anotherValue + ' which is async!\n');
+check(function (anotherValue, value) {
+    console.log(value + anotherValue + ' which is async!\n');
 });
 
 function check (callback) {
-    callback ("Another callback test");
+    callback (val1, val2);
 }
