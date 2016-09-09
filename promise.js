@@ -1,9 +1,10 @@
-var val1;
+var val1 = 'Value1 ';
 var val2 = 'Value2 ';
 var anotherValue = 'Another callback';
 
 var fs = require("fs");
-var Promise = require('promise');
+var promise = require('promise');
+var readFile = promise.denodeify(require('fs').readFile);
 
 fs.readFile('input.txt', function (err, data) {
     if (err) {
@@ -16,10 +17,20 @@ fs.readFile('input.txt', function (err, data) {
     }
 });
 
-check(function (anotherValue, value) {
-    console.log(value + anotherValue + ' which is async!\n');
-});
-
 function check (callback) {
     callback (val1, val2);
 }
+
+function retrieveContent (filename) {
+	readFile(filename, 'utf-8').then(function (data) {
+		console.log(data);
+		console.log('Acync thing doesn\'t work here');
+	});
+	console.log('Acync thing works');
+}
+
+check(function (anotherValue, value) {
+    console.log(anotherValue + value + ' which is async!\n');
+});
+
+retrieveContent('input1.txt');
