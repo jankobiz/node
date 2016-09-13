@@ -1,102 +1,61 @@
-var http = require('http');
-var Promise = require('promise');
+var val1 = 'Value1 ';
+var val2 = 'Value2 ';
+var anotherValue = 'Another callback';
 
-syncOutput(function () {		
-	console.log('Lets try this approach!');
-	getjson = getData(http);
-	getJSONPromise = getData(http);
-	//setTimeout(console.log(getjson.title),3000);
-    getJSONPromise.then(function (data) {
-		console.log(data);    // 'hello world’
-	}, function (error) {
-		console.error('uh oh: ', error);   // 'uh oh: something bad happened’
+var fs = require("fs");
+var promise = require('promise');
+var readFile = promise.denodeify(require('fs').readFile);
+var httpGet = promise.denodeify(require('http').get);
+
+fs.readFile('input.txt', function (err, data) {
+    if (err) {
+		return console.error(err);
+    } else {
+	console.log(data.toString() + '\n');
+	check(function (val1, val2) {
+	    console.log(val1);
 	});
-});
-//var greeting = sayHello();
-//console.log(greeting);    // 'hello world’
-//getDataReq(http);
-//setTimeout(function () {
-//		getDataReq(http);
-//		console.log(' ');
-//		console.log('Then timeout!');
-//		console.log(' ');
-//}, 1000);
-//getData(http);
-console.log(' ');
-console.log('After GET!');
-console.log(' ');
-
-function syncOutput (callback) {
-	callback();
-	console.log('After callback!');
-};
-
-function sayHello() {
-	return 'Hello world!';	
-}
-
-function getDataReq (http) {
-	var options = {
-	host: 'jsonplaceholder.typicode.com',
-	port: '80',
-	path: '/posts/1',
-	method: 'GET',  
-	headers: {
-	    'Content-Type': 'application/json; charset=utf-8'
-	}
-	};
-	var req = http.request(options, function(res) {
-		// response is here
-		res.on('data', function (chunk) {
-			console.log('Requested with http.request() method ' + chunk);		
-			jsonObject = JSON.parse(chunk);
-			console.log(jsonObject.userId);
-		});
-	}).on('error', function(e) {
-		console.log("Got error: " + e.message);
-	});
-	// write the request parameters
-	req.write('post=data&is=specified&like=this');
-	req.end();
-};
-
-function getData (http) {
-	var requestedData;
-	http.get('http://jsonplaceholder.typicode.com/posts/1', function (res) {
-		console.log("Got response: " + res.statusCode);
-		if(res.statusCode === 200) {
-			console.log("Got value: " + res.statusMessage);
-			//console.log("Got value: " + JSON.stringify(res));
-			res.setEncoding('utf8');		
-			res.on('end', function () {
-				console.log('Response ended');
-				return requestedData;
-			});
-			res.on('data', function (chunk) {
-				console.log(chunk);
-				requestedData = chunk;
-				jsonObject = JSON.parse(chunk);
-				console.log(jsonObject.userId);
-			});
-		}
-	}).on('error', function(e) {
-		console.log("Got error: " + e.message);
-	});	
-}
-
-function findProperty(obj, name) {
-    for (var prop in obj) {    
-	var value = obj[prop];
-	if (typeof value === 'object') {
-	    if (prop === name){
-		return result = value;
-        }
-        findProperty(value, name);
-	} else {
-	    if (prop === name) {
-		result = value;
-		return result;
-	    }
-	}
     }
+});
+
+function check (callback) {
+    callback (val1, val2);
 }
+
+function retrieveContent (filename) {
+	readFile(filename, 'utf-8').then(function (data) {
+		console.log(data);
+		console.log('Acync thing doesn\'t work here');
+	});
+	console.log('Acync thing works');
+}
+
+function getData () {
+	var requestedData;
+	httpGet('http://jsonplaceholder.typicode.com/posts/1').then(function (data) {
+		console.log("Got response: " + data.statusCode);
+//		if(res.statusCode === 200) {
+//			console.log("Got value: " + res.statusMessage);
+//			//console.log("Got value: " + JSON.stringify(res));
+//			res.setEncoding('utf8');		
+//			res.on('end', function () {
+//				console.log('Response ended');
+//				return requestedData;
+//			});
+//			res.on('data', function (chunk) {
+//				console.log(chunk);
+//				requestedData = chunk;
+//				jsonObject = JSON.parse(chunk);
+//				console.log(jsonObject.userId);
+//			});
+//		}
+	});
+	console.log('Acync HTTP');
+}
+
+check(function (anotherValue, value) {
+    console.log(anotherValue + value + ' which is async!\n');
+});
+
+retrieveContent('input1.txt');
+getData();
