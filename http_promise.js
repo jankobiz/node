@@ -1,4 +1,4 @@
-/* global promiseCount */
+/* global promiseCount, promise2 */
 
 var fs = require("fs");
 var Promise = require('Promise');
@@ -32,8 +32,7 @@ function retrieveContent (filename) {
 	var p2 = new Promise (
 		function (resolve, reject){
 			resolve(filename);
-		}
-		return promise;
+		}		
 	);
 	p2.then(
 			function(val) {
@@ -48,23 +47,10 @@ function retrieveContent (filename) {
 				});
 			}
 		);
-	p2.then(
-			function(val) {
-				setTimeout(console.log('Promise 3 should be logged last - file name ' + val + '\n'), 5000);
-			}			
-		);
+	return p2;
 }
 
-function anotherPromiseTest(promise2){
-	var p3 = new Promise (
-		function (resolve, reject){
-			resolve(filename);
-		}
-		return promise;
-	);
-}
-
-function testPromise () {
+function testPromise (i) {
 	//var thisPromiseCount = ++promiseCount;
 	var thisPromiseCount = i;
 	console.log('\n\n' + thisPromiseCount + ') Promise started (Sync code started)');
@@ -89,8 +75,67 @@ function testPromise () {
             console.log('Handle rejected promise ('+reason+') here.');
 	});
 	console.log(thisPromiseCount + ') Promise made (Sync code terminated)');
+	return p1;
 }
 
 for (i=1; i<=2; i++){
 	testPromise(i);
 }
+
+
+var firstPromiseTest = function (){
+	var p3 = new Promise (
+		function (resolve, reject){
+			resolve(promise2);
+		}
+	);	
+	return p3;
+};
+
+var secondtPromiseTest = function (promise2){
+	var p3 = new Promise (
+		function (resolve, reject){
+			resolve(promise2);
+		}
+	);	
+	return p3;
+};
+
+var firstMethod = function() {
+   var promise = new Promise(function(resolve, reject){
+      setTimeout(function() {
+         console.log('first method completed');
+         resolve({data: '123'});
+      }, 2000);
+   });
+   return promise;
+};
+ 
+ 
+var secondMethod = function(someStuff) {
+   var promise = new Promise(function(resolve, reject){
+      setTimeout(function() {
+         console.log('second method completed');
+         resolve({newData: someStuff.data + ' some more data'});
+      }, 2000);
+   });
+   return promise;
+};
+ 
+var thirdMethod = function(someStuff) {
+   var promise = new Promise(function(resolve, reject){
+      setTimeout(function() {
+         console.log('third method completed ' + someStuff.newData);
+         resolve({result: someStuff.newData});
+      }, 3000);
+   });
+   return promise;
+};
+ 
+var final = firstMethod()
+   .then(secondMethod)
+   .then(thirdMethod)
+   .then(function(val){
+			console.log('\n' + val.result.someStuff.newData +') Promise code terminated)\n');
+		});
+setTimeout(function() {console.log("END OF THE SCRIPT " + final.toString());}, 5000);
