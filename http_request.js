@@ -7,13 +7,13 @@ syncOutput(function () {
 	getJSONPromise = getData(http);
 	//setTimeout(console.log(getjson.title),3000);
     getJSONPromise.then(function (data) {
-		console.log(data);    // 'hello world’
+		console.log(data);    // 'hello world
 	}, function (error) {
-		console.error('uh oh: ', error);   // 'uh oh: something bad happened’
+		console.error('uh oh: ', error);   // 'uh oh: something bad happenedï¿½
 	});
 });
 //var greeting = sayHello();
-//console.log(greeting);    // 'hello world’
+//console.log(greeting);    // 'hello worldï¿½
 //getDataReq(http);
 //setTimeout(function () {
 //		getDataReq(http);
