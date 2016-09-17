@@ -127,7 +127,7 @@ var thirdMethod = function(someStuff) {
       setTimeout(function() {
          console.log('third method completed ' + someStuff.newData);
          resolve({result: someStuff.newData});
-      }, 3000);
+      }, 4100);
    });
    return promise;
 };
@@ -136,6 +136,5 @@ var final = firstMethod()
    .then(secondMethod)
    .then(thirdMethod)
    .then(function(val){
-			console.log('\n' + val.result.someStuff.newData +') Promise code terminated)\n');
+			console.log('\n' + val.result.someStuff.newData +') Promise code termination done)\n');
 		});
-setTimeout(function() {console.log("END OF THE SCRIPT " + final.toString());}, 5000);
