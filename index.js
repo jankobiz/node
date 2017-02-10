@@ -85,6 +85,7 @@ var the_meaning = deep_thought.ask_question(function (value) {
                     console.log(data.toString() + " and that's it!\n" );
                     console.log('After file read\n');
                 });
+				console.log('Level 1 after call to level 2!');
             });
             console.log(value);
         }
