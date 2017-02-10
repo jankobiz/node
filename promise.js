@@ -22,6 +22,7 @@ function retrieveContent (filename) {
 function getData () {
 	var requestedData;
 	httpGet('http://jsonplaceholder.typicode.com/posts/1').then(function (data) {
+		console.log("HTTP Response!");
 		console.log("Got response: " + data.statusCode);
 //		if(res.statusCode === 200) {
 //			console.log("Got value: " + res.statusMessage);
@@ -44,9 +45,9 @@ function getData () {
 
 /*
  *  function calls  
+ * 
  */
  
-
 fs.readFile('input.txt', function (err, data) {
     if (err) {
 		return console.error(err);
